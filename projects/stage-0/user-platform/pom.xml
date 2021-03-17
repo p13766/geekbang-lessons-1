@@ -34,7 +34,9 @@
         <!-- MicroProfile 版本-->
         <microprofile-config-api.version>2.0</microprofile-config-api.version>
 
-        <!-- Maven Plugins 版本 -->
+        <jolokia-core.version>1.6.2</jolokia-core.version>
+
+       <!-- Maven Plugins 版本 -->
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.source.version>3.2.1</maven.source.version>
         <maven.jar.version>3.2.0</maven.jar.version>
@@ -121,6 +123,8 @@
                 <artifactId>microprofile-config-api</artifactId>
                 <version>${microprofile-config-api.version}</version>
             </dependency>
+
+
 
         </dependencies>
 

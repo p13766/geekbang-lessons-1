@@ -2,13 +2,16 @@ package org.geektimes.projects.user.web.listener;
 
 import org.geektimes.context.ComponentContext;
 import org.geektimes.projects.user.domain.User;
+import org.geektimes.projects.user.management.UserManager;
 import org.geektimes.projects.user.sql.DBConnectionManager;
 
+import javax.management.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import java.lang.management.ManagementFactory;
 import java.util.logging.Logger;
 
 /**
@@ -26,10 +29,27 @@ public class TestingListener implements ServletContextListener {
         dbConnectionManager.getConnection();
         testPropertyFromServletContext(sce.getServletContext());
         testPropertyFromJNDI(context);
-        testUser(dbConnectionManager.getEntityManager());
+//        testUser(dbConnectionManager.getEntityManager());
         logger.info("所有的 JNDI 组件名称：[");
         context.getComponentNames().forEach(logger::info);
         logger.info("]");
+
+        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+        ObjectName name = null;
+        try {
+            name = new ObjectName("jolokia:name=" + "User");
+            mBeanServer.registerMBean(new UserManager(new User()), name);
+        } catch (MalformedObjectNameException e) {
+            e.printStackTrace();
+        } catch (NotCompliantMBeanException e) {
+            e.printStackTrace();
+        } catch (InstanceAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (MBeanRegistrationException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void testPropertyFromServletContext(ServletContext servletContext) {
