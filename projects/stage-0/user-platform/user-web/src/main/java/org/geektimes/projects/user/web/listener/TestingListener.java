@@ -1,6 +1,6 @@
 package org.geektimes.projects.user.web.listener;
 
-import org.geektimes.context.ComponentContext;
+import org.geektimes.context.ClassicComponentContext;
 import org.geektimes.projects.user.domain.User;
 import org.geektimes.projects.user.management.UserManager;
 import org.geektimes.projects.user.sql.DBConnectionManager;
@@ -24,7 +24,7 @@ public class TestingListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        ComponentContext context = ComponentContext.getInstance();
+        ClassicComponentContext context = ClassicComponentContext.getInstance();
         DBConnectionManager dbConnectionManager = context.getComponent("bean/DBConnectionManager");
         dbConnectionManager.getConnection();
         testPropertyFromServletContext(sce.getServletContext());
@@ -58,7 +58,7 @@ public class TestingListener implements ServletContextListener {
                 + servletContext.getInitParameter(propertyName));
     }
 
-    private void testPropertyFromJNDI(ComponentContext context) {
+    private void testPropertyFromJNDI(ClassicComponentContext context) {
         String propertyName = "maxValue";
         logger.info("JNDI Property[" + propertyName + "] : "
                 + context.lookupComponent(propertyName));

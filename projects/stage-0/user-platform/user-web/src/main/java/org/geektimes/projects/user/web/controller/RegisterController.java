@@ -1,5 +1,6 @@
 package org.geektimes.projects.user.web.controller;
 
+import org.geektimes.context.ClassicComponentContext;
 import org.geektimes.context.ComponentContext;
 import org.geektimes.projects.user.domain.User;
 import org.geektimes.projects.user.repository.DatabaseUserRepository;
@@ -34,7 +35,7 @@ public class RegisterController implements PageController {
 //        dbConnectionManager.setConnection(connection);
 //        UserRepository userRepository = new DatabaseUserRepository(dbConnectionManager);
 //        userRepository.save(user);
-        ComponentContext context = ComponentContext.getInstance();
+        ComponentContext context = ClassicComponentContext.getInstance();
         UserService userService = context.getComponent("bean/UserService");
         userService.register(user);
         return "ok.jsp";
